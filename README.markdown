@@ -1,8 +1,7 @@
-# Vim Markdown runtime files
+# Vim Markdown runtime files - enhanced
 
-This is the development version of Vim's included syntax highlighting and
-filetype plugins for Markdown.  Generally you don't need to install these if
-you are running a recent version of Vim.
+This is my fork of Vim's syntax highlighting and filetype plugins for Markdown,
+including some improvements.
 
 If you want to enable fenced code block syntax highlighting in your markdown
 documents you can enable it in your `.vimrc` like so:
