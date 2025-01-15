@@ -1,8 +1,9 @@
 " Vim syntax file
 " Language:     Markdown
-" Maintainer:   Tim Pope <https://github.com/tpope/vim-markdown>
+" Maintainer:   A. Herreros <https://github.com/alonso-herreros/vim-markdown>
 " Filenames:    *.markdown
-" Last Change:  2022 Oct 13
+" Last Change:  2025 Jan 15
+" Remark:	    Forked from <https://github.com/tpope/vim-markdown>
 
 if exists("b:current_syntax")
   finish
@@ -66,8 +67,8 @@ syn match markdownValid '&\%(#\=\w*;\)\@!' transparent contains=NONE
 
 syn match markdownLineStart "^[<@]\@!" nextgroup=@markdownBlock,htmlSpecialChar
 
-syn cluster markdownBlock contains=markdownH1,markdownH2,markdownH3,markdownH4,markdownH5,markdownH6,markdownBlockquote,markdownListMarker,markdownOrderedListMarker,markdownCodeBlock,markdownRule
-syn cluster markdownInline contains=markdownLineBreak,markdownLinkText,markdownItalic,markdownBold,markdownCode,markdownEscape,@htmlTop,markdownError,markdownValid
+syn cluster markdownBlock contains=markdownH1,markdownH2,markdownH3,markdownH4,markdownH5,markdownH6,markdownBlockquote,markdownListMarker,markdownOrderedListMarker,markdownCodeBlock,markdownRule,markdownMathBlock
+syn cluster markdownInline contains=markdownLineBreak,markdownLinkText,markdownItalic,markdownBold,markdownCode,markdownEscape,@htmlTop,markdownError,markdownValid,markdownMath
 
 syn match markdownH1 "^.\+\n=\+$" contained contains=@markdownInline,markdownHeadingRule,markdownAutomaticLink
 syn match markdownH2 "^.\+\n-\+$" contained contains=@markdownInline,markdownHeadingRule,markdownAutomaticLink
@@ -142,6 +143,12 @@ if get(b:, 'markdown_yaml_head', get(g:, 'markdown_yaml_head', main_syntax ==# '
   syn include @markdownYamlTop syntax/yaml.vim
   unlet! b:current_syntax
   syn region markdownYamlHead start="\%^---$" end="^\%(---\|\.\.\.\)\s*$" keepend contains=@markdownYamlTop,@Spell
+endif
+
+if get(b:, 'markdown_math', get(g:, 'markdown_math', main_syntax ==# 'markdown'))
+  syn include @markdownTex syntax/tex.vim
+  syn region markdownMath start="\\\@<!\$" end="\$" skip="\\\$" contains=@markdownTex keepend
+  syn region markdownMathBlock start="\\\@<!\$\$" end="\$\$" skip="\\\$" contains=@markdownTex keepend
 endif
 
 syn match markdownEscape "\\[][\\`*_{}()<>#+.!-]"
